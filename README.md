@@ -14,10 +14,9 @@
 ![Compute Vm Configuration](./images/computeVm.png)
 
 ## 2. Configure Static IPs on VMs
+- For the second NIC ( ens192 ) : Disable the IPv4 & IPv6
 
 ![Controller Ip Configuration 1](./images/net1.png)
-
-![Controller Ip Configuration 2](./images/net2.png)
 
 ![Controller Networks](./images/Networks.png)
 
@@ -242,17 +241,17 @@ kolla-ansible prechecks  -i ./multinode
 
 ```
 
-### C. Validate before deployment : 
-
-```
-kolla-ansible validate-config -i ./multinode
-
-```
-
-### D. Finally proceed to actual OpenStack deployment :
+### C. Finally proceed to actual OpenStack deployment :
 
 ```
 kolla-ansible deploy  -i ./multinode
+
+```
+
+### D. Validate before deployment : 
+
+```
+kolla-ansible validate-config -i ./multinode
 
 ```
 
@@ -265,7 +264,7 @@ pip install python-openstackclient -c https://releases.openstack.org/constraints
 source /openrc.sh  ( Contains Credentials of Openstack )
 
 ```
-### B. OpenStack requires a clouds.yaml file where credentials for the admin user are set. To generate this file ( will be generated in /etc/kolla/clouds.yaml ) : 
+### B. OpenStack requires a clouds.yaml file where credentials for the admin user are set. To this file will be generated in /etc/kolla/clouds.yaml by running this command : 
 
 ```
 kolla-ansible post-deploy
@@ -311,7 +310,7 @@ openstack aggregate show my-aggregate2
 
 ```
 
-![Show AZs Aggregates Details](./images/Aggregate.png)
+![Show AZs Aggregates Details](./images/Aggregates.png)
 
 
 ## 18. Run This File /share/kolla-ansible/init-runonce To Create Demo Services
@@ -332,13 +331,16 @@ openstack aggregate show my-aggregate2
 cat /etc/kolla/clouds.yml
 
 ```
-Take the auth_url till the IP Address without the port : http://<IP-Address>:<port>
+- Take the auth_url till the IP Address without the port : http://IP-Address:port
+- You will find the admin user password as --> password: admin-user-password
 
 ![Openstack Cloud Dashboard URL](./images/DashboardURL.png)
 
 
 
 ### B. Get admin user Password for your Cloud Dashboard : 
+
+You can also run this command ( Alternative Way ) : 
 
 ```
 grep keystone_admin_password /etc/kolla/passwords.yml 
@@ -366,5 +368,6 @@ grep keystone_admin_password /etc/kolla/passwords.yml
 ## 21. References
 
 Main Guides : 
-- For Deploying Openstack Cloud using kolla-ansible : https://docs.openstack.org/kolla-ansible/latest/user/quickstart.html
+- For Deploying Openstack Cloud using kolla-ansible : https://docs.openstack.org/kolla-ansible/latest/user/quickstart.html ,
+https://docs.openstack.org/kolla-ansible/latest/user/multinode.html
 - For Creating AZs : https://docs.openstack.org/nova/latest/admin/availability-zones.html

@@ -18,6 +18,8 @@
 
 ![Controller Ip Configuration 1](./images/net1.png)
 
+- Note : The primary user in all amchines must be the `kolla` user that was created.
+
 ![Controller Networks](./images/Networks.png)
 
 ## 3. Set Hostnames and Networking in ( /etc/hosts )
@@ -54,6 +56,9 @@ sudo dnf install git python3-devel libffi-devel gcc openssl-devel python3-libsel
 ```
 
 ## 6. Add User ( on the 3 machines : controller , 2 compute nodes )
+
+- Note : This step is required only if a different user was created during the VM configuration at the beggining. If the kolla user was created initially ( upon VM configuration before OS installation ), you can skip this step.
+
 
 ```
 su - 
@@ -120,7 +125,7 @@ sudo chown $USER:$USER /etc/kolla
 ### C. Copy globals.yml and passwords.yml to /etc/kolla directory :
 
 ```
-cp -r ./share/kolla-ansible/etc_examples/kolla/* /etc/kolla
+cp -r /home/kolla/.local/share/kolla-ansible/etc_examples/kolla/* /etc/kolla
 
 ansible --version
 
@@ -132,7 +137,7 @@ ansible --version
 ### D. Copy multinode inventory file to the current directory :
 
 ```
-cp ./share/kolla-ansible/ansible/inventory/multinode .
+cp /home/kolla/.local/share/kolla-ansible/ansible/inventory/multinode .
 
 kolla-ansible --version
 
@@ -261,9 +266,11 @@ kolla-ansible validate-config -i ./multinode
 ```
 pip install python-openstackclient -c https://releases.openstack.org/constraints/upper/master
 
-source /openrc.sh  ( Contains Credentials of Openstack )
+source /etc/kolla/admin-openrc-system.sh 
 
 ```
+- This file contains credentials of Openstack.
+
 ### B. OpenStack requires a clouds.yaml file where credentials for the admin user are set. To this file will be generated in /etc/kolla/clouds.yaml by running this command : 
 
 ```

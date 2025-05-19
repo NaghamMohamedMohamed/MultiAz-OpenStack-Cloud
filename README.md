@@ -378,3 +378,4 @@ Main Guides :
 - For Deploying Openstack Cloud using kolla-ansible : https://docs.openstack.org/kolla-ansible/latest/user/quickstart.html ,
 https://docs.openstack.org/kolla-ansible/latest/user/multinode.html
 - For Creating AZs : https://docs.openstack.org/nova/latest/admin/availability-zones.html
+- Clarification For OpenStack Regions and Availability Zones : https://www.guruadvisor.net/en/cloud/121-openstack-regions-and-availability-zones
